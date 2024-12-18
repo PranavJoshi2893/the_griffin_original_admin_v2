@@ -1,0 +1,10 @@
+<div class="form_card">
+    <form class="form" [formGroup]="sectionForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+            <mat-label>Section Name</mat-label>
+            <input type="text" matInput formControlName="section_name">
+        </mat-form-field>
+
+        <button mat-flat-button color="primary">Submit</button>
+    </form>
+</div>
