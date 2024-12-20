@@ -12,4 +12,12 @@ export class CategoryService {
   createCategory(category: any): Observable<any> {
     return this._http.post<any>(`${this._url}/`, category);
   }
+
+  getAllCategories(): Observable<any> {
+    return this._http.get<any>(`${this._url}/`);
+  }
+
+  deleteCategory(id: number): Observable<any> {
+    return this._http.delete(`${this._url}/${id}`);
+  }
 }

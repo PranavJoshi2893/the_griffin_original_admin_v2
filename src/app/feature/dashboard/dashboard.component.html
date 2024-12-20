@@ -1,10 +1,21 @@
 <div class="wrapper">
-    <header></header>
-    <main>
-        <div class="drawer"></div>
-        <div class="container">
-            <router-outlet />
-        </div>
-    </main>
-    <footer></footer>
+  <header></header>
+  <main>
+    <div class="drawer">
+      <mat-list>
+        <mat-list-item class="list" (click)="onRedirect('section/list')"
+          >Section</mat-list-item
+        >
+        <mat-divider></mat-divider>
+        <mat-list-item class="list" (click)="onRedirect('category/list')"
+          >Category</mat-list-item
+        >
+        <mat-divider></mat-divider>
+      </mat-list>
+    </div>
+    <div class="container">
+      <router-outlet />
+    </div>
+  </main>
+  <footer></footer>
 </div>
