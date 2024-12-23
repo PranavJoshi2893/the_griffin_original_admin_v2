@@ -51,6 +51,13 @@ export const routes: Routes = [
                 './feature/categories/create-category/create-category.component'
               ).then((mod) => mod.CreateCategoryComponent),
           },
+          {
+            path: 'update/:id',
+            loadComponent: () =>
+              import(
+                './feature/categories/update-category/update-category.component'
+              ).then((mod) => mod.UpdateCategoryComponent),
+          },
         ],
       },
     ],

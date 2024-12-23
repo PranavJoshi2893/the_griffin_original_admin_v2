@@ -17,6 +17,14 @@ export class CategoryService {
     return this._http.get<any>(`${this._url}/`);
   }
 
+  getCategoryById(id: string): Observable<any> {
+    return this._http.get<any>(`${this._url}/${id}`);
+  }
+
+  updateCategory(category: any, id: string): Observable<any> {
+    return this._http.patch<any>(`${this._url}/${id}`, category);
+  }
+
   deleteCategory(id: number): Observable<any> {
     return this._http.delete(`${this._url}/${id}`);
   }

@@ -1,4 +1,4 @@
-<button (click)="createCategory()">Add Categoty</button>
+<button (click)="createCategory()" mat-flat-button>Add Categoty</button>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
   <ng-container matColumnDef="sr_no">
     <th mat-header-cell *matHeaderCellDef>No.</th>
@@ -20,14 +20,18 @@
   <ng-container matColumnDef="edit">
     <th mat-header-cell *matHeaderCellDef>Edit</th>
     <td mat-cell *matCellDef="let element">
-      <button>Edit</button>
+      <button mat-mini-fab class="btn">
+        <mat-icon (click)="redirectTo(element.pcid)">edit</mat-icon>
+      </button>
     </td>
   </ng-container>
 
   <ng-container matColumnDef="delete">
     <th mat-header-cell *matHeaderCellDef>Delete</th>
     <td mat-cell *matCellDef="let element">
-      <button (click)="onDelete(element.pcid)">Delete</button>
+      <button (click)="onDelete(element.pcid)" mat-mini-fab class="btn">
+        <mat-icon>delete</mat-icon>
+      </button>
     </td>
   </ng-container>
 

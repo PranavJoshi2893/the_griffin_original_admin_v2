@@ -11,8 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { SectionService } from '../../../core/service/section.service';
 import { MatSelectModule } from '@angular/material/select';
 import { CategoryService } from '../../../core/service/category.service';
+import { Router } from '@angular/router';
 
-interface ISection {
+export interface ISection {
   sid: number;
   section_name: number;
 }
@@ -74,5 +75,11 @@ export class CreateCategoryComponent implements OnInit {
         },
       });
     }
+  }
+
+  private _router = inject(Router);
+
+  onRedirect() {
+    this._router.navigate(['category', 'list']);
   }
 }

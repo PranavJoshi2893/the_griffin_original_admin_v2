@@ -2,6 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CategoryService } from '../../../core/service/category.service';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 export interface ICategory {
   pcid: number;
@@ -11,7 +13,7 @@ export interface ICategory {
 
 @Component({
   selector: 'app-list-category',
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatButtonModule, MatIconModule],
   templateUrl: './list-category.component.html',
   styleUrl: './list-category.component.css',
 })
@@ -62,5 +64,9 @@ export class ListCategoryComponent implements OnInit {
 
   createCategory() {
     this._router.navigate(['category', 'create']);
+  }
+
+  redirectTo(id: number) {
+    this._router.navigate(['category', 'update', id]);
   }
 }
