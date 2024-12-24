@@ -3,6 +3,7 @@ import { PageNotFoundComponent } from './core/component/page-not-found/page-not-
 import { DashboardComponent } from './feature/dashboard/dashboard.component';
 import { SectionComponent } from './feature/section/section.component';
 import { CategoriesComponent } from './feature/categories/categories.component';
+import { UserComponent } from './feature/user/user.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -66,6 +67,49 @@ export const routes: Routes = [
               ).then((mod) => mod.UpdateCategoryComponent),
           },
         ],
+      },
+      {
+        path: 'user',
+        component: UserComponent,
+        children: [
+          { path: '', redirectTo: 'list', pathMatch: 'full' },
+          {
+            path: 'list',
+            loadComponent: () =>
+              import('./feature/user/list-user/list-user.component').then(
+                (mod) => mod.ListUserComponent
+              ),
+          },
+          {
+            path: 'create',
+            loadComponent: () =>
+              import('./feature/user/create-user/create-user.component').then(
+                (mod) => mod.CreateUserComponent
+              ),
+          },
+          {
+            path: 'update/:id',
+            loadComponent: () =>
+              import('./feature/user/update-user/update-user.component').then(
+                (mod) => mod.UpdateUserComponent
+              ),
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: 'authentication',
+    loadComponent: () =>
+      import('./feature/auth/auth.component').then((mod) => mod.AuthComponent),
+    children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./feature/auth/login/login.component').then(
+            (mod) => mod.LoginComponent
+          ),
       },
     ],
   },

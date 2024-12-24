@@ -1,0 +1,28 @@
+<div class="form_card">
+  <form class="form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Email ID</mat-label>
+      <input
+        type="email"
+        matInput
+        formControlName="email"
+        autocomplete="email"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input
+        type="password"
+        matInput
+        formControlName="password"
+        autocomplete="new-password"
+      />
+    </mat-form-field>
+
+    <div class="btn_section">
+      <mat-checkbox>Remember Me</mat-checkbox>
+      <button mat-flat-button type="submit" color="primary">Login</button>
+    </div>
+  </form>
+</div>

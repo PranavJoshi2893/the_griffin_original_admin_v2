@@ -1,0 +1,32 @@
+<div class="wrapper">
+  <div class="form_card">
+    <form class="form" [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input type="text" matInput formControlName="first_name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input type="text" matInput formControlName="last_name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email ID</mat-label>
+        <input type="email" matInput formControlName="email" />
+      </mat-form-field>
+
+      <!-- <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" />
+      </mat-form-field> -->
+
+      <div class="btn_section">
+        <button mat-stroked-button type="button" (click)="onRedirect()">
+          Back
+        </button>
+        <button mat-flat-button type="submit" color="primary">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
