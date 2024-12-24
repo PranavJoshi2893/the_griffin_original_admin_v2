@@ -4,12 +4,14 @@ import { DashboardComponent } from './feature/dashboard/dashboard.component';
 import { SectionComponent } from './feature/section/section.component';
 import { CategoriesComponent } from './feature/categories/categories.component';
 import { UserComponent } from './feature/user/user.component';
+import { authGuard } from './core/guard/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
   {
     path: '',
     component: DashboardComponent,
+    canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'section', pathMatch: 'full' },
       {

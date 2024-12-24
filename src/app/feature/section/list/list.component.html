@@ -1,35 +1,37 @@
-<button (click)="createSection()" mat-flat-button>Add Section</button>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
-  <ng-container matColumnDef="sr_no">
-    <th mat-header-cell *matHeaderCellDef>No.</th>
-    <td mat-cell *matCellDef="let element; let i = index">
-      {{ i + 1 }}
-    </td>
-  </ng-container>
+<div class="wrapper">
+  <button (click)="createSection()" mat-flat-button>Add Section</button>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
+    <ng-container matColumnDef="sr_no">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        {{ i + 1 }}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="section_name">
-    <th mat-header-cell *matHeaderCellDef>Section</th>
-    <td mat-cell *matCellDef="let element">{{ element.section_name }}</td>
-  </ng-container>
+    <ng-container matColumnDef="section_name">
+      <th mat-header-cell *matHeaderCellDef>Section</th>
+      <td mat-cell *matCellDef="let element">{{ element.section_name }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="edit">
-    <th mat-header-cell *matHeaderCellDef>Edit</th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-mini-fab class="btn">
-        <mat-icon (click)="redirectTo(element.sid)">edit</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>Edit</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-mini-fab class="btn">
+          <mat-icon (click)="redirectTo(element.sid)">edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="delete">
-    <th mat-header-cell *matHeaderCellDef>Delete</th>
-    <td mat-cell *matCellDef="let element">
-      <button (click)="onDelete(element.sid)" mat-mini-fab class="btn">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>Delete</th>
+      <td mat-cell *matCellDef="let element">
+        <button (click)="onDelete(element.sid)" mat-mini-fab class="btn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

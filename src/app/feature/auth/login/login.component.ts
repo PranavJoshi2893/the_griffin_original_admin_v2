@@ -10,6 +10,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UserService } from '../../../core/service/user.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +21,7 @@ import { UserService } from '../../../core/service/user.service';
     MatButtonModule,
     ReactiveFormsModule,
     MatCheckboxModule,
+    MatSnackBarModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
@@ -37,19 +40,28 @@ export class LoginComponent implements OnInit {
 
   private _userService = inject(UserService);
 
+  private _router = inject(Router);
+
   onSubmit() {
     if (this.userForm.valid) {
       this._userService.loginUser(this.userForm.value).subscribe({
         next: (response) => {
-          console.log(response.message);
+          this.openSnackBar(response.message, 2000);
+          this._userService.storeToken(response);
         },
         error: (err) => {
-          console.log(err.error.error);
+          this.openSnackBar(err.error.error, 2000);
         },
         complete: () => {
-          console.log('done');
+          this._router.navigate(['']);
         },
       });
     }
+  }
+
+  private _snackBar = inject(MatSnackBar);
+
+  openSnackBar(message: string, duration: number) {
+    this._snackBar.open(message, 'close', { duration });
   }
 }

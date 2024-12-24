@@ -9,6 +9,23 @@ export class UserService {
   private _url = 'http://localhost:3000/api/v1/users';
   constructor(private _http: HttpClient) {}
 
+  storeToken(response: { access_token: string; refresh_token: string }): void {
+    localStorage.setItem('access_token', response.access_token);
+    localStorage.setItem('refresh_token', response.refresh_token);
+  }
+
+  getAccessToken() {
+    return localStorage.getItem('access_token');
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getAccessToken();
+  }
+
+  logout(): void {
+    localStorage.clear();
+  }
+
   loginUser(userInfo: any): Observable<any> {
     return this._http.post<any>(`${this._url}/login`, userInfo);
   }
