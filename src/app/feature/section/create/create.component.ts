@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { SectionService } from '../../../core/service/section.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -50,7 +51,7 @@ export class CreateComponent implements OnInit {
           this.openSnackBar(err.error.error, 2000);
         },
         complete: () => {
-          console.log('done');
+          this._router.navigate(['section', 'list']);
         },
       });
     }
@@ -58,5 +59,10 @@ export class CreateComponent implements OnInit {
 
   openSnackBar(message: string, duration: number) {
     this._snackBar.open(message, 'close', { duration });
+  }
+
+  private _router = inject(Router);
+  onRedirect() {
+    this._router.navigate(['section', 'list']);
   }
 }

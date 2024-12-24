@@ -4,6 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 export interface ICategory {
   pcid: number;
@@ -13,7 +14,7 @@ export interface ICategory {
 
 @Component({
   selector: 'app-list-category',
-  imports: [MatTableModule, MatButtonModule, MatIconModule],
+  imports: [MatTableModule, MatButtonModule, MatIconModule, MatSnackBarModule],
   templateUrl: './list-category.component.html',
   styleUrl: './list-category.component.css',
 })
@@ -46,13 +47,12 @@ export class ListCategoryComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    console.log(id);
     this._categoryService.deleteCategory(id).subscribe({
       next: (response) => {
-        console.log(response);
+        this.openSnackBar(response.message, 2000);
       },
       error: (err) => {
-        console.log(err);
+        this.openSnackBar(err.error.error, 2000);
       },
       complete: () => {
         this.fetchList();
@@ -68,5 +68,11 @@ export class ListCategoryComponent implements OnInit {
 
   redirectTo(id: number) {
     this._router.navigate(['category', 'update', id]);
+  }
+
+  private _snackBar = inject(MatSnackBar);
+
+  openSnackBar(message: string, duration: number) {
+    this._snackBar.open(message, 'close', { duration });
   }
 }

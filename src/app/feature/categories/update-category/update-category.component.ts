@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CategoryService } from '../../../core/service/category.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-update-category',
@@ -22,6 +23,7 @@ import { CategoryService } from '../../../core/service/category.service';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatSnackBarModule,
   ],
   templateUrl: './update-category.component.html',
   styleUrl: './update-category.component.css',
@@ -61,10 +63,7 @@ export class UpdateCategoryComponent implements OnInit {
             });
           },
           error: (err) => {
-            console.log(err);
-          },
-          complete: () => {
-            console.log('done');
+            this.openSnackBar(err.error.error, 2000);
           },
         });
       }
@@ -80,6 +79,9 @@ export class UpdateCategoryComponent implements OnInit {
       next: (response) => {
         this.sections = response;
       },
+      error: (err) => {
+        this.openSnackBar(err.error.error, 2000);
+      },
     });
   }
 
@@ -89,16 +91,22 @@ export class UpdateCategoryComponent implements OnInit {
         .updateCategory(this.updateCategoryForm.value, this.category_id)
         .subscribe({
           next: (response) => {
-            console.log(response);
+            this.openSnackBar(response.message, 2000);
           },
           error: (err) => {
-            console.error(err);
+            this.openSnackBar(err.error.error, 2000);
           },
           complete: () => {
-            console.log('done');
+            this._router.navigate(['category', 'list']);
           },
         });
     }
+  }
+
+  private _snackBar = inject(MatSnackBar);
+
+  openSnackBar(message: string, duration: number) {
+    this._snackBar.open(message, 'close', { duration });
   }
 
   private _router = inject(Router);

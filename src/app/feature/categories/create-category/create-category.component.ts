@@ -12,6 +12,7 @@ import { SectionService } from '../../../core/service/section.service';
 import { MatSelectModule } from '@angular/material/select';
 import { CategoryService } from '../../../core/service/category.service';
 import { Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 export interface ISection {
   sid: number;
@@ -26,6 +27,7 @@ export interface ISection {
     MatButtonModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatSnackBarModule,
   ],
   templateUrl: './create-category.component.html',
   styleUrl: './create-category.component.css',
@@ -65,16 +67,22 @@ export class CreateCategoryComponent implements OnInit {
     if (this.categoryForm.valid) {
       this._categoryService.createCategory(this.categoryForm.value).subscribe({
         next: (resposne) => {
-          console.log(resposne);
+          this.openSnackBar(resposne.message, 2000);
         },
         error: (err) => {
-          console.error(err);
+          this.openSnackBar(err.error.error, 2000);
         },
         complete: () => {
-          console.log('done');
+          this._router.navigate(['category', 'list']);
         },
       });
     }
+  }
+
+  private _snackBar = inject(MatSnackBar);
+
+  openSnackBar(message: string, duration: number) {
+    this._snackBar.open(message, 'close', { duration });
   }
 
   private _router = inject(Router);

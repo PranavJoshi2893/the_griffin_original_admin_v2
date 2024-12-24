@@ -17,4 +17,16 @@ export class SectionService {
   getAllSections(): Observable<any> {
     return this._http.get<any>(`${this._url}/`);
   }
+
+  getSectionById(id: string): Observable<any> {
+    return this._http.get<any>(`${this._url}/${id}`);
+  }
+
+  deleteSection(id: number): Observable<any> {
+    return this._http.delete<any>(`${this._url}/${id}`);
+  }
+
+  updateSection(section: any, id: string): Observable<any> {
+    return this._http.patch<any>(`${this._url}/${id}`, section);
+  }
 }

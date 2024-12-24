@@ -30,6 +30,13 @@ export const routes: Routes = [
                 (mod) => mod.CreateComponent
               ),
           },
+          {
+            path: 'update/:id',
+            loadComponent: () =>
+              import(
+                './feature/section/update-section/update-section.component'
+              ).then((mod) => mod.UpdateSectionComponent),
+          },
         ],
       },
       {
