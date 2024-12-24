@@ -38,7 +38,7 @@ export class UpdateUserComponent implements OnInit {
         [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)],
       ],
       last_name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
-      email: ['', [Validators.required, Validators.email]],
+      // email: ['', [Validators.required, Validators.email]],
       // password: ['', [Validators.required]],
     });
   }
@@ -64,7 +64,24 @@ export class UpdateUserComponent implements OnInit {
     });
   }
 
-  onSubmit() {}
+  onSubmit() {
+    if (this.updateUserForm.valid && !!this.user_id) {
+      this._userService
+        .updateUser(this.updateUserForm.value, this.user_id)
+        .subscribe({
+          next: (response) => {
+            console.log(response);
+            this.openSnackBar(response.message, 2000);
+          },
+          error: (err) => {
+            this.openSnackBar(err.error.error, 2000);
+          },
+          complete: () => {
+            this._router.navigate(['user', 'list']);
+          },
+        });
+    }
+  }
 
   private _router = inject(Router);
   onRedirect() {

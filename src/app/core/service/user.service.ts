@@ -25,7 +25,11 @@ export class UserService {
     return this._http.get<any>(`${this._url}/${id}`);
   }
 
-  deleteUser(id: string) {
+  deleteUser(id: string): Observable<any> {
     return this._http.delete<any>(`${this._url}/${id}`);
+  }
+
+  updateUser(userInfo: any, id: string): Observable<any> {
+    return this._http.patch<any>(`${this._url}/${id}`, userInfo);
   }
 }
