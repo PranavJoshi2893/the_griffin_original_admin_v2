@@ -8,16 +8,10 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { SectionService } from '../../../core/service/section.service';
 import { MatSelectModule } from '@angular/material/select';
 import { CategoryService } from '../../../core/service/category.service';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-
-export interface ISection {
-  sid: number;
-  section_name: number;
-}
 
 @Component({
   selector: 'app-create-category',
@@ -37,26 +31,23 @@ export class CreateCategoryComponent implements OnInit {
 
   private _fb = inject(FormBuilder);
 
-  private _sectionService = inject(SectionService);
+  categories!: any[];
 
   ngOnInit(): void {
+    this.fetchCategories();
     this.categoryForm = this._fb.group({
-      section_id: ['', [Validators.required]],
+      parent_category_id: [undefined],
       category_name: [
         '',
         [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)],
       ],
     });
-
-    this.getSections();
   }
 
-  sections!: ISection[];
-
-  getSections() {
-    this._sectionService.getAllSections().subscribe({
+  fetchCategories() {
+    this._categoryService.getAllCategories().subscribe({
       next: (response) => {
-        this.sections = response;
+        this.categories = response;
       },
     });
   }

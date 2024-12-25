@@ -7,8 +7,6 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { SectionService } from '../../../core/service/section.service';
-import { ISection } from '../create-category/create-category.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -35,12 +33,9 @@ export class UpdateCategoryComponent implements OnInit {
   private _route = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.fetchSection();
-
     this.captureDataById();
 
     this.updateCategoryForm = this._fb.group({
-      section_id: ['', [Validators.required]],
       category_name: [
         '',
         [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)],
@@ -58,7 +53,6 @@ export class UpdateCategoryComponent implements OnInit {
         this._categoryService.getCategoryById(this.category_id).subscribe({
           next: (response) => {
             this.updateCategoryForm.patchValue({
-              section_id: response.section.sid,
               category_name: response.category_name,
             });
           },
@@ -67,21 +61,6 @@ export class UpdateCategoryComponent implements OnInit {
           },
         });
       }
-    });
-  }
-
-  sections!: ISection[];
-
-  private _sectionService = inject(SectionService);
-
-  fetchSection() {
-    this._sectionService.getAllSections().subscribe({
-      next: (response) => {
-        this.sections = response;
-      },
-      error: (err) => {
-        this.openSnackBar(err.error.error, 2000);
-      },
     });
   }
 

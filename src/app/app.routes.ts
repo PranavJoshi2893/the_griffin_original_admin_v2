@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { PageNotFoundComponent } from './core/component/page-not-found/page-not-found.component';
 import { DashboardComponent } from './feature/dashboard/dashboard.component';
-import { SectionComponent } from './feature/section/section.component';
 import { CategoriesComponent } from './feature/categories/categories.component';
 import { UserComponent } from './feature/user/user.component';
 import { authGuard } from './core/guard/auth.guard';
@@ -13,35 +12,7 @@ export const routes: Routes = [
     component: DashboardComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', redirectTo: 'section', pathMatch: 'full' },
-      {
-        path: 'section',
-        component: SectionComponent,
-        children: [
-          { path: '', redirectTo: 'list', pathMatch: 'full' },
-          {
-            path: 'list',
-            loadComponent: () =>
-              import('./feature/section/list/list.component').then(
-                (mod) => mod.ListComponent
-              ),
-          },
-          {
-            path: 'create',
-            loadComponent: () =>
-              import('./feature/section/create/create.component').then(
-                (mod) => mod.CreateComponent
-              ),
-          },
-          {
-            path: 'update/:id',
-            loadComponent: () =>
-              import(
-                './feature/section/update-section/update-section.component'
-              ).then((mod) => mod.UpdateSectionComponent),
-          },
-        ],
-      },
+      { path: '', redirectTo: 'category', pathMatch: 'full' },
       {
         path: 'category',
         component: CategoriesComponent,

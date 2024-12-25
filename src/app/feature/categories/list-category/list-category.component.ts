@@ -8,8 +8,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 export interface ICategory {
   pcid: number;
-  section_name: number;
-  category_name: number;
+  category_name: string;
+  parent_category_name: string;
 }
 
 @Component({
@@ -19,13 +19,7 @@ export interface ICategory {
   styleUrl: './list-category.component.css',
 })
 export class ListCategoryComponent implements OnInit {
-  displayedColumns: string[] = [
-    'sr_no',
-    'category_name',
-    'section_name',
-    'edit',
-    'delete',
-  ];
+  displayedColumns: string[] = ['sr_no', 'category_name', 'edit', 'delete'];
   dataSource!: ICategory[];
 
   private _categoryService = inject(CategoryService);
@@ -40,7 +34,6 @@ export class ListCategoryComponent implements OnInit {
         this.dataSource = response.map((item: any) => ({
           pcid: item.pcid,
           category_name: item.category_name,
-          section_name: item.section.section_name,
         }));
       },
     });

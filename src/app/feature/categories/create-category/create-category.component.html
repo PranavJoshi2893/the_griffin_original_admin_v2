@@ -3,10 +3,10 @@
     <form class="form" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline">
         <mat-label>Section</mat-label>
-        <mat-select formControlName="section_id">
-          @for (section of sections; track section) {
-          <mat-option [value]="section.sid">{{
-            section.section_name
+        <mat-select formControlName="parent_category_id">
+          @for (category of categories; track category) {
+          <mat-option [value]="category.pcid">{{
+            category.category_name
           }}</mat-option>
           }
         </mat-select>
