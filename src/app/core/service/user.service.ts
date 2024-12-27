@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
+import { BYPASS_REFRESH } from '../interceptor/token.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,10 @@ export class UserService {
 
   getAccessToken() {
     return localStorage.getItem('access_token');
+  }
+
+  getRefreshToken() {
+    return localStorage.getItem('refresh_token');
   }
 
   isLoggedIn(): boolean {
@@ -48,5 +53,23 @@ export class UserService {
 
   updateUser(userInfo: any, id: string): Observable<any> {
     return this._http.patch<any>(`${this._url}/${id}`, userInfo);
+  }
+
+  refresh(): Observable<any> {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.getRefreshToken()}`
+    );
+    const context = new HttpContext().set(BYPASS_REFRESH, true);
+    return this._http
+      .post<any>(`${this._url}/refresh`, {}, { headers, context })
+      .pipe(
+        tap((response: any) => {
+          localStorage.setItem('access_token', response.access_token);
+        }),
+        catchError((err) => {
+          return throwError(() => err);
+        })
+      );
   }
 }
