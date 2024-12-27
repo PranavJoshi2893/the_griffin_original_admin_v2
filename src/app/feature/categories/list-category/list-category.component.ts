@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CategoryService } from '../../../core/service/category.service';
 import { MatTableModule } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -19,7 +19,13 @@ export interface ICategory {
   styleUrl: './list-category.component.css',
 })
 export class ListCategoryComponent implements OnInit {
-  displayedColumns: string[] = ['sr_no', 'category_name', 'edit', 'delete'];
+  displayedColumns: string[] = [
+    'sr_no',
+    'category_name',
+    'edit',
+    'delete',
+    'next_level',
+  ];
   dataSource!: ICategory[];
 
   private _categoryService = inject(CategoryService);
@@ -67,5 +73,19 @@ export class ListCategoryComponent implements OnInit {
 
   openSnackBar(message: string, duration: number) {
     this._snackBar.open(message, 'close', { duration });
+  }
+
+  fetchDataById(id: string) {
+    console.log(id);
+    this._categoryService.getCategoryById(id).subscribe({
+      next: (response) => {
+        if (response.children.length !== 0) {
+          this.dataSource = response.children;
+        }
+      },
+      error: (err) => {
+        console.log(err.error.error);
+      },
+    });
   }
 }

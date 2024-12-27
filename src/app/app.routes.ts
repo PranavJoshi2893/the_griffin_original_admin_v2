@@ -24,6 +24,15 @@ export const routes: Routes = [
               import(
                 './feature/categories/list-category/list-category.component'
               ).then((mod) => mod.ListCategoryComponent),
+            children: [
+              {
+                path: ':id',
+                loadComponent: () =>
+                  import(
+                    './feature/categories/list-category/list-category.component'
+                  ).then((mod) => mod.ListCategoryComponent),
+              },
+            ],
           },
           {
             path: 'create',
